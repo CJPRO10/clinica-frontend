@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Dashboard() {
+function UserDashboard() {
   return (
     <div>
       <h1>Panel Principal</h1>
@@ -9,4 +9,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default UserDashboard;

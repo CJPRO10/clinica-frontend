@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import UserDashboard from './pages/UserDashboard';
 import PrivateRoute from './auth/PrivateRoute';
 import SignUp from './pages/SignUp';
 
@@ -12,9 +12,9 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<SignUp />}/>
-        <Route path="/dashboard" element={
+        <Route path="/userdashboard" element={
           <PrivateRoute>
-            <Dashboard />
+            <UserDashboard />
           </PrivateRoute>
         }/>
       </Routes>
