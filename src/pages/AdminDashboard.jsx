@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function UserDashboard() {
+function AdminDashboard() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -12,8 +12,8 @@ function UserDashboard() {
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'Segoe UI, sans-serif' }}>
-      <h1 style={{ color: '#2e7d32' }}>Panel de Usuario</h1>
-      <p>Bienvenido al Dashboard de Usuario.</p>
+      <h1 style={{ color: '#1565c0' }}>Panel de Administración</h1>
+      <p>Bienvenido, administrador. Aquí puedes gestionar doctores, pacientes, citas y más.</p>
       <button
         onClick={handleLogout}
         style={{
@@ -32,4 +32,4 @@ function UserDashboard() {
   );
 }
 
-export default UserDashboard;
+export default AdminDashboard;
