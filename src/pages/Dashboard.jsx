@@ -4,7 +4,7 @@ function Dashboard() {
   return (
     <div>
       <h1>Panel Principal</h1>
-      <p>Bienvenido al Dashboard.</p>
+      <p>Bienvenido al Dashboard de User.</p>
     </div>
   );
 }
