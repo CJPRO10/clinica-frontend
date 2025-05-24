@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import { toast } from 'react-toastify';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -23,7 +24,7 @@ function Login() {
       }
     } catch (err) {
       console.error("Login fallo", err);
-      alert('Credenciales incorrectas');
+      toast.error('Credenciales incorrectas');
     }
   };
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import { toast } from 'react-toastify';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ function SignUp() {
     username: '',
     email: '',
     password: '',
-    roles: ['user'], // por defecto "user"
+    roles: ['admin'], // por defecto "user"
   });
 
   const handleChange = (e) => {
@@ -23,10 +24,10 @@ function SignUp() {
     e.preventDefault();
     try {
       await axios.post('/auth/register', formData);
-      alert('Cuenta creada correctamente');
+      toast.success('Cuenta creada correctamente');
       navigate('/login');
     } catch (error) {
-      alert(error.response?.data?.message || 'Error al registrarse');
+      toast.error(error.response?.data?.message || 'Error al registrarse');
     }
   };
 
