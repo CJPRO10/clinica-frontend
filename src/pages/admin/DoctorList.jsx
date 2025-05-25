@@ -3,10 +3,20 @@ import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button
+} from '@mui/material';
 
 function DoctorList() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const navigate = useNavigate();
 
   const fetchDoctors = async () => {
@@ -14,21 +24,27 @@ function DoctorList() {
       const res = await axios.get('/doctors');
       setDoctors(res.data);
     } catch (error) {
-      toast.error('Error al obtener doctores');
+      toast.error(error.response?.data?.message || 'Error al obtener doctores');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('¿Estás seguro de eliminar este doctor?')) {
-      try {
-        await axios.delete(`/doctors/${id}`);
-        toast.success('Doctor eliminado correctamente');
-        fetchDoctors();
-      } catch (error) {
-        toast.error('Error al eliminar el doctor');
-      }
+  const confirmDelete = (doctor) => {
+    setSelectedDoctor(doctor);
+    setOpenDialog(true);
+  };
+
+  const handleDeleteConfirmed = async () => {
+    try {
+      await axios.delete(`/doctors/${selectedDoctor.id}`);
+      toast.success('Doctor eliminado correctamente');
+      fetchDoctors();
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Error al eliminar el doctor');
+    } finally {
+      setOpenDialog(false);
+      setSelectedDoctor(null);
     }
   };
 
@@ -36,13 +52,31 @@ function DoctorList() {
     fetchDoctors();
   }, []);
 
+  
+
   return (
     <div style={{ padding: '2rem', fontFamily: 'Segoe UI, sans-serif' }}>
       <ToastContainer />
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+        <button
+          onClick={() => navigate('/dashboard/admin')}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#d32f2f',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer'
+          }}  
+        >
+          Regresar
+        </button>
+      </div>
       <h2 style={{ color: '#1565c0' }}>Lista de Doctores</h2>
 
       <button
-        onClick={() => navigate('/admin/doctors/new')}
+        onClick={() => navigate('/dashboard/admin/doctors/new')}
         style={{
           marginBottom: '1rem',
           padding: '10px 20px',
@@ -76,13 +110,13 @@ function DoctorList() {
                 <td style={tdStyle}>{doctor.email}</td>
                 <td style={tdStyle}>
                   <button
-                    onClick={() => navigate(`/admin/doctors/edit/${doctor.id}`)}
+                    onClick={() => navigate(`/dashboard/admin/doctors/edit/${doctor.id}`)}
                     style={{ marginRight: '10px' }}
                   >
                     Editar
                   </button>
                   <button
-                    onClick={() => handleDelete(doctor.id)}
+                    onClick={() => confirmDelete(doctor)}
                     style={{
                       backgroundColor: '#c62828',
                       color: 'white',
@@ -100,6 +134,24 @@ function DoctorList() {
           </tbody>
         </table>
       )}
+
+      {/* Diálogo de confirmación */}
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>¿Eliminar doctor?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            ¿Estás seguro de que deseas eliminar al doctor "{selectedDoctor?.fullName}"? Esta acción no se puede deshacer.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleDeleteConfirmed} color="error" variant="contained">
+            Eliminar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
@@ -116,3 +168,4 @@ const tdStyle = {
 };
 
 export default DoctorList;
+

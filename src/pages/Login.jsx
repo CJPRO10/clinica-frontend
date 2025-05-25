@@ -17,14 +17,15 @@ function Login() {
       localStorage.setItem('token', token);
       localStorage.setItem('roles', JSON.stringify(roles));
 
+      toast.success('Inicio de sesión exitoso');
+      
       if (roles.includes('ROLE_ADMIN')) {
         navigate('/dashboard/admin');
       } else if (roles.includes('ROLE_USER')) {
         navigate('/dashboard/user');
       }
-    } catch (err) {
-      console.error("Login fallo", err);
-      toast.error('Credenciales incorrectas');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Credenciales incorrectas');
     }
   };
 
@@ -97,6 +98,21 @@ function Login() {
             Entrar
           </button>
         </form>
+        <p>
+          <button
+            onClick={() => navigate('/forgot-password')}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#1565c0',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              marginTop: '0.5rem'
+            }}
+          >
+            ¿Olvidaste tu contraseña?
+          </button>
+        </p>
         <p style={{ marginTop: '1rem' }}>
           <button
             onClick={() => navigate('/signup')}
