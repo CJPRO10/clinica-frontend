@@ -25,7 +25,7 @@ function Login() {
         navigate('/dashboard/user');
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Credenciales incorrectas');
+      toast.error('Credenciales incorrectas');
     }
   };
 

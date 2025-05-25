@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -12,106 +12,91 @@ import {
   Button
 } from '@mui/material';
 
-function DoctorList() {
-  const [doctors, setDoctors] = useState([]);
+function PatientList() {
+  const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const navigate = useNavigate();
 
-  const fetchDoctors = async () => {
+  const fetchPatients = async () => {
     try {
-      const res = await axios.get('/doctors');
-      setDoctors(res.data);
+      const res = await axios.get('/patients');
+      setPatients(res.data);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error al obtener doctores');
+      toast.error('Error al obtener pacientes');
     } finally {
       setLoading(false);
     }
   };
 
-  const confirmDelete = (doctor) => {
-    setSelectedDoctor(doctor);
+  const confirmDelete = (patient) => {
+    setSelectedPatient(patient);
     setOpenDialog(true);
   };
 
   const handleDeleteConfirmed = async () => {
     try {
-      await axios.delete(`/doctors/${selectedDoctor.id}`);
-      toast.success('Doctor eliminado correctamente');
-      fetchDoctors();
+      await axios.delete(`/patients/${selectedPatient.id}`);
+      toast.success('Paciente eliminado correctamente');
+      fetchPatients();
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error al eliminar el doctor');
+      toast.error('Error al eliminar el paciente');
     } finally {
       setOpenDialog(false);
-      setSelectedDoctor(null);
+      setSelectedPatient(null);
     }
   };
 
   useEffect(() => {
-    fetchDoctors();
+    fetchPatients();
   }, []);
 
   return (
-    <div style={{
-      height: '100vh',
-      width: '100vw',
-      background: 'linear-gradient(to right, #e3f2fd, #e8f5e9)',
-      padding: '2rem',
-      fontFamily: 'Segoe UI, sans-serif'
-    }}>
+    <div style={containerStyle}>
       <ToastContainer />
-
       <div style={toolbarStyle}>
         <button onClick={() => navigate('/dashboard/admin')} style={backButtonStyle}>
           <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>arrow_back</span>
           Regresar
         </button>
-        <h2 style={titleStyle}>Lista de Doctores</h2>
-        <button onClick={() => navigate('/dashboard/admin/doctors/new')} style={newButtonStyle}>
+        <h2 style={titleStyle}>Lista de Pacientes</h2>
+        <button onClick={() => navigate('/dashboard/admin/patients/new')} style={newButtonStyle}>
           <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>person_add</span>
-          Nuevo Doctor
+          Nuevo Paciente
         </button>
       </div>
 
-      {/* Tabla */}
-      <div style={{ overflowX: 'auto' }}>
-        {loading ? (
-          <p style={{ textAlign: 'center', color: 'black' }}>Cargando doctores...</p>
-        ) : (
-          <table style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            backgroundColor: '#fff',
-            borderRadius: '10px',
-            overflow: 'hidden',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-          }}>
+      {loading ? (
+        <p style={{ fontSize: '1.1rem', textAlign: 'center', color: 'black' }}>Cargando pacientes...</p>
+      ) : (
+        <div style={{ overflowX: 'auto' }}>
+          <table style={tableStyle}>
             <thead>
-              <tr style={{ backgroundColor: '#bbdefb' }}>
+              <tr style={{ backgroundColor: '#e3f2fd' }}>
                 <th style={thStyle}>Nombre</th>
-                <th style={thStyle}>Especialidad</th>
                 <th style={thStyle}>Email</th>
+                <th style={thStyle}>Teléfono</th>
                 <th style={thStyle}>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {doctors.map((doctor) => (
-                <tr key={doctor.id}>
-                  <td style={tdStyle}>{doctor.fullName}</td>
-                  <td style={tdStyle}>{doctor.specialty}</td>
-                  <td style={tdStyle}>{doctor.email}</td>
+              {patients.map((patient) => (
+                <tr key={patient.id}>
+                  <td style={tdStyle}>{patient.fullName}</td>
+                  <td style={tdStyle}>{patient.email}</td>
+                  <td style={tdStyle}>{patient.phone}</td>
                   <td style={tdStyle}>
                     <button
-                      onClick={() => navigate(`/dashboard/admin/doctors/edit/${doctor.id}`)}
-                      style={actionButtonStyle('#1976d2')}
+                      onClick={() => navigate(`/dashboard/admin/patients/edit/${patient.id}`)}
+                      style={editButtonStyle}
                     >
                       <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>edit</span>
                       Editar
                     </button>
                     <button
-                      onClick={() => confirmDelete(doctor)}
-                      style={actionButtonStyle('#c62828')}
+                      onClick={() => confirmDelete(patient)}
+                      style={deleteButtonStyle}
                     >
                       <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>delete</span>
                       Eliminar
@@ -121,15 +106,15 @@ function DoctorList() {
               ))}
             </tbody>
           </table>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Diálogo de confirmación */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>¿Eliminar doctor?</DialogTitle>
+        <DialogTitle>¿Eliminar paciente?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar al doctor "{selectedDoctor?.fullName}"? Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar al paciente "{selectedPatient?.fullName}"? Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -143,32 +128,16 @@ function DoctorList() {
       </Dialog>
     </div>
   );
-
 }
 
-const thStyle = {
-  padding: '12px',
-  borderBottom: '2px solid #ccc',
-  textAlign: 'left',
-  fontWeight: 'bold',
-  color: '#333'
+// 🎨 Estilos
+const containerStyle = {
+  padding: '2rem',
+  fontFamily: 'Segoe UI, sans-serif',
+  background: 'linear-gradient(to right, #e3f2fd, #e8f5e9)',
+  height: '100vh',
+  width: '100vw'     
 };
-
-const tdStyle = {
-  padding: '12px',
-  borderBottom: '1px solid #eee',
-  color: '#444'
-};
-
-const actionButtonStyle = (bgColor) => ({
-  marginRight: '10px',
-  padding: '6px 12px',
-  backgroundColor: bgColor,
-  color: 'white',
-  border: 'none',
-  borderRadius: '4px',
-  cursor: 'pointer'
-});
 
 const toolbarStyle = {
   display: 'flex',
@@ -177,6 +146,13 @@ const toolbarStyle = {
   marginBottom: '1.5rem',
   flexWrap: 'wrap',
   gap: '1rem'
+};
+
+const titleStyle = {
+  color: '#0d47a1',
+  margin: 0,
+  flexGrow: 1,
+  textAlign: 'center'
 };
 
 const backButtonStyle = {
@@ -189,13 +165,6 @@ const backButtonStyle = {
   fontWeight: 'bold'
 };
 
-const titleStyle = {
-  color: '#0d47a1',
-  margin: 0,
-  flexGrow: 1,
-  textAlign: 'center'
-};
-
 const newButtonStyle = {
   padding: '8px 16px',
   backgroundColor: '#1b5e20',
@@ -206,4 +175,46 @@ const newButtonStyle = {
   fontWeight: 'bold'
 };
 
-export default DoctorList;
+const tableStyle = {
+  width: '100%',
+  borderCollapse: 'collapse',
+  backgroundColor: '#ffffff',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+};
+
+const thStyle = {
+  padding: '12px',
+  borderBottom: '1px solid #ccc',
+  textAlign: 'left',
+  fontWeight: 'bold',
+  color: '#333'
+};
+
+const tdStyle = {
+  padding: '12px',
+  borderBottom: '1px solid #eee',
+  color: '#444'
+};
+
+const editButtonStyle = {
+  marginRight: '10px',
+  padding: '6px 12px',
+  backgroundColor: '#1976d2',
+  color: 'white',
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer'
+};
+
+const deleteButtonStyle = {
+  padding: '6px 12px',
+  backgroundColor: '#c62828',
+  color: 'white',
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer'
+};
+
+export default PatientList;

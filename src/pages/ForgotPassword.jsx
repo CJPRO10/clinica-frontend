@@ -24,12 +24,14 @@ function ForgotPassword() {
   return (
     <div style={{
       height: '100vh',
+      width: '100vw',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       fontFamily: 'Segoe UI, sans-serif',
       background: 'linear-gradient(to right, #f3e5f5, #e8f5e9)'
     }}>
+        
       <form onSubmit={handleSubmit} style={{
         background: '#fff',
         padding: '2rem',
@@ -37,26 +39,30 @@ function ForgotPassword() {
         boxShadow: '0 0 15px rgba(0,0,0,0.1)',
         width: '100%',
         maxWidth: '400px'
-      }}>
-        <h2 style={{ marginBottom: '1rem', color: '#2e7d32' }}>Restablecer contraseña</h2>
+        }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+            <h2 style={{ color: '#2e7d32', margin: 0 }}>Restablecer contraseña</h2>
+        </div>
+
         <input
-          type="email"
-          placeholder="Correo registrado"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={inputStyle}
+            type="email"
+            placeholder="Correo registrado"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={inputStyle}
         />
         <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-          style={inputStyle}
+            type="password"
+            placeholder="Nueva contraseña"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+            style={inputStyle}
         />
         <button type="submit" style={buttonStyle}>Actualizar contraseña</button>
-      </form>
+        </form>
+
     </div>
   );
 }

@@ -10,9 +10,12 @@ import SignUp from './pages/SignUp';
 import RoleRoute from './auth/RoleRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import DoctorList from './pages/admin/DoctorList';
-import CreateDoctor from './pages/admin/CreateDoctor';
-import EditDoctor from './pages/admin/EditDoctor';
+import CreateDoctor from './pages/admin/DoctorCreate';
+import EditDoctor from './pages/admin/DoctorEdit';
 import ForgotPassword from './pages/ForgotPassword';
+import PatientList from './pages/admin/PatientList';
+import PatientEdit from './pages/admin/PatientEdit';
+import PatientCreate from './pages/admin/PatientCreate';
 
 function App() {
   return (
@@ -75,6 +78,36 @@ function App() {
         path='/forgot-password'
         element={
           <ForgotPassword />}
+        />
+        <Route
+          path="/dashboard/admin/patients"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <PatientList />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/patients/new"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <PatientCreate />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/patients/edit/:id"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <PatientEdit />
+              </RoleRoute>
+            </PrivateRoute>
+          }
         />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
