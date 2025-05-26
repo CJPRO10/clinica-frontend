@@ -16,13 +16,14 @@ function Login() {
 
       localStorage.setItem('token', token);
       localStorage.setItem('roles', JSON.stringify(roles));
+      localStorage.setItem('doctorId', res.data.doctorId);
 
       toast.success('Inicio de sesión exitoso');
       
       if (roles.includes('ROLE_ADMIN')) {
         navigate('/dashboard/admin');
       } else if (roles.includes('ROLE_USER')) {
-        navigate('/dashboard/user');
+        navigate('/dashboard/doctor');
       }
     } catch (error) {
       toast.error('Credenciales incorrectas');
