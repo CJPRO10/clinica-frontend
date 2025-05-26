@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './pages/home';
 import Login from './pages/Login';
-import UserDashboard from './pages/UserDashboard';
+import UserDashboard from './pages/user/UserDashboard';
 import PrivateRoute from './auth/PrivateRoute';
 import SignUp from './pages/SignUp';
 import RoleRoute from './auth/RoleRoute';
@@ -16,6 +16,12 @@ import ForgotPassword from './pages/ForgotPassword';
 import PatientList from './pages/admin/PatientList';
 import PatientEdit from './pages/admin/PatientEdit';
 import PatientCreate from './pages/admin/PatientCreate';
+import AppointmentList from './pages/admin/AppointmentList';
+import AppointmentCreate from './pages/admin/AppointmentCreate';
+import AppointmentEdit from './pages/admin/AppointmentEdit';
+import ConsultRoomCreate from './pages/admin/ConsultRoomCreate';
+import ConsultRoomList from './pages/admin/ConsultRoomList';
+import ConsultRoomEdit from './pages/admin/ConsultRoomEdit';
 
 function App() {
   return (
@@ -105,6 +111,66 @@ function App() {
             <PrivateRoute>
               <RoleRoute allowedRoles={['ROLE_ADMIN']}>
                 <PatientEdit />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/appointments"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <AppointmentList />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/appointments/new"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <AppointmentCreate />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/appointments/edit/:id"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <AppointmentEdit />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/rooms"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <ConsultRoomList />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/rooms/new"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <ConsultRoomCreate />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/rooms/edit/:id"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <ConsultRoomEdit />
               </RoleRoute>
             </PrivateRoute>
           }

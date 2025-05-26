@@ -45,6 +45,14 @@ function AdminDashboard() {
             <span className="material-icons" style={iconStyle}>groups</span>
             Gestionar Pacientes
           </button>
+          <button onClick={() => navigate('/dashboard/admin/appointments')} style={navButtonStyle('#0288d1')}>
+            <span className="material-icons" style={iconStyle}>event</span>
+            Gestionar Citas
+          </button>
+          <button onClick={() => navigate('/dashboard/admin/rooms')} style={navButtonStyle('#0288d1')}>
+            <span className="material-icons" style={iconStyle}>hotel</span>
+            Gestionar Consultorios
+          </button>
         </div>
       </div>
     </div>

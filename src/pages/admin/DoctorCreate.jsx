@@ -93,7 +93,6 @@ const titleStyle = {
 
 const labelStyle = {
   display: 'block',
-  marginBottom: '0.5rem',
   fontWeight: 'bold',
   color: '#333'
 };
