@@ -12,98 +12,105 @@ import {
   Button
 } from '@mui/material';
 
-function DoctorList() {
-  const [doctors, setDoctors] = useState([]);
+function AppointmentList() {
+  const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
   const navigate = useNavigate();
 
-  const fetchDoctors = async () => {
+  const fetchAppointments = async () => {
     try {
-      const res = await axios.get('/doctors');
-      setDoctors(res.data);
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Error al obtener doctores');
+      const res = await axios.get('/appointments');
+      setAppointments(res.data);
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Error al obtener las citas');
     } finally {
       setLoading(false);
     }
   };
 
-  const confirmDelete = (doctor) => {
-    setSelectedDoctor(doctor);
+  const confirmDelete = (appointment) => {
+    setSelectedAppointment(appointment);
     setOpenDialog(true);
   };
 
   const handleDeleteConfirmed = async () => {
     try {
-      await axios.delete(`/doctors/${selectedDoctor.id}`);
-      toast.success('Doctor eliminado correctamente');
-      fetchDoctors();
+      await axios.delete(`/appointments/${selectedAppointment.id}`);
+      toast.success('Cita eliminada correctamente');
+      fetchAppointments(); // refresca la lista
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Error al eliminar el doctor');
+      toast.error(error.response?.data?.message || 'Error al eliminar la cita');
     } finally {
       setOpenDialog(false);
-      setSelectedDoctor(null);
+      setSelectedAppointment(null);
     }
   };
 
   useEffect(() => {
-    fetchDoctors();
+    fetchAppointments();
   }, []);
 
   return (
     <div style={containerStyle}>
       <ToastContainer />
-
       <div style={toolbarStyle}>
         <button onClick={() => navigate('/dashboard/admin')} style={backButtonStyle}>
           <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>arrow_back</span>
           Regresar
         </button>
-        <h2 style={titleStyle}>Lista de Doctores</h2>
+        <h2 style={titleStyle}>Lista de Citas Médicas</h2>
         <button onClick={() => navigate('/dashboard/admin/doctors/new')} style={newButtonStyle}>
           <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>person_add</span>
-          Nuevo Doctor
+          Nueva Cita
         </button>
       </div>
 
-      {/* Tabla */}
       <div style={{ overflowX: 'auto' }}>
         {loading ? (
-          <p style={{ textAlign: 'center', color: 'black' }}>Cargando doctores...</p>
+          <p style={{ textAlign: 'center', color: 'black' }}>Cargando citas...</p>
         ) : (
           <table style={tableStyle}>
             <thead>
               <tr style={{ backgroundColor: '#bbdefb' }}>
-                <th style={thStyle}>Nombre</th>
-                <th style={thStyle}>Especialidad</th>
-                <th style={thStyle}>Email</th>
+                <th style={thStyle}>Paciente</th>
+                <th style={thStyle}>Doctor</th>
+                <th style={thStyle}>Consultorio</th>
+                <th style={thStyle}>Fecha</th>
+                <th style={thStyle}>Estado</th>
                 <th style={thStyle}>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {doctors.map((doctor) => (
-                <tr key={doctor.id}>
-                  <td style={tdStyle}>{doctor.fullName}</td>
-                  <td style={tdStyle}>{doctor.specialty}</td>
-                  <td style={tdStyle}>{doctor.email}</td>
+              {appointments.map((app) => (
+                <tr key={app.id}>
+                  <td style={tdStyle}>{app.patientFullName}</td>
+                  <td style={tdStyle}>{app.doctorFullName}</td>
+                  <td style={tdStyle}>{app.consultRoomName}</td>
                   <td style={tdStyle}>
-                    <button
-                      onClick={() => navigate(`/dashboard/admin/doctors/edit/${doctor.id}`)}
-                      style={editButtonStyle}
-                    >
-                      <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>edit</span>
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => confirmDelete(doctor)}
-                      style={deleteButtonStyle}
-                    >
-                      <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>delete</span>
-                      Eliminar
-                    </button>
+                    {formatDateTimeRange(app.startTime, app.endTime)}
                   </td>
+                 <td style={tdStyle}>{app.status}</td>
+                  <td style={{ ...tdStyle, padding: '8px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                        <button
+                        onClick={() => navigate(`/dashboard/admin/appointments/edit/${app.id}`)}
+                        style={editButtonStyle}
+                        >
+                        <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>edit</span>
+                        Editar
+                        </button>
+                        <button
+                        onClick={() => confirmDelete(app)}
+                        style={deleteButtonStyle}
+                        >
+                        <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>delete</span>
+                        Eliminar
+                        </button>
+                    </div>
+                    </td>
+
                 </tr>
               ))}
             </tbody>
@@ -113,10 +120,10 @@ function DoctorList() {
 
       {/* Diálogo de confirmación */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>¿Eliminar doctor?</DialogTitle>
+        <DialogTitle>¿Eliminar cita?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar al doctor "{selectedDoctor?.fullName}"? Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -130,7 +137,6 @@ function DoctorList() {
       </Dialog>
     </div>
   );
-
 }
 
 // 🎨 Estilos
@@ -223,5 +229,24 @@ const deleteButtonStyle = {
   cursor: 'pointer'
 };
 
+const formatDateTimeRange = (start, end) => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
 
-export default DoctorList;
+  const dateFormatter = new Intl.DateTimeFormat('es-CO', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  const timeFormatter = new Intl.DateTimeFormat('es-CO', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  });
+
+  return `${dateFormatter.format(startDate)}, ${timeFormatter.format(startDate)} - ${timeFormatter.format(endDate)}`;
+};
+
+export default AppointmentList;

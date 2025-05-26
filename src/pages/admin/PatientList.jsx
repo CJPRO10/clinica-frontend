@@ -73,7 +73,7 @@ function PatientList() {
         <div style={{ overflowX: 'auto' }}>
           <table style={tableStyle}>
             <thead>
-              <tr style={{ backgroundColor: '#e3f2fd' }}>
+              <tr style={{ backgroundColor: '#bbdefb' }}>
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Email</th>
                 <th style={thStyle}>Teléfono</th>
@@ -187,15 +187,18 @@ const tableStyle = {
 const thStyle = {
   padding: '12px',
   borderBottom: '1px solid #ccc',
-  textAlign: 'left',
+  textAlign: 'center',
   fontWeight: 'bold',
-  color: '#333'
+  color: '#333',
+  border: '1px solid #ddd',
 };
 
 const tdStyle = {
   padding: '12px',
   borderBottom: '1px solid #eee',
-  color: '#444'
+  color: '#444',
+  border: '1px solid #ddd',
+  textAlign: 'center'
 };
 
 const editButtonStyle = {
