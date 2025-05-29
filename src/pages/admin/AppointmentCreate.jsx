@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { cardStyle, titleStyle, backButtonStyle, inputStyle, containerStyle, labelStyle, submitButtonStyle } from '../../styles/classes';
+
 
 function AppointmentCreate() {
   const navigate = useNavigate();
@@ -45,48 +47,39 @@ function AppointmentCreate() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={containerStyle}>
       <ToastContainer />
-      <h2 style={{ color: '#1565c0' }}>Agendar Cita Médica</h2>
-      <form onSubmit={handleSubmit} style={{ maxWidth: '500px' }}>
-        <select name="patientId" value={formData.patientId} onChange={handleChange} required style={inputStyle}>
-          <option value="">Seleccione paciente</option>
-          {patients.map(p => <option key={p.id} value={p.id}>{p.fullName}</option>)}
-        </select>
-        <select name="doctorId" value={formData.doctorId} onChange={handleChange} required style={inputStyle}>
-          <option value="">Seleccione doctor</option>
-          {doctors.map(d => <option key={d.id} value={d.id}>{d.fullName}</option>)}
-        </select>
-        <select name="consultRoomId" value={formData.consultRoomId} onChange={handleChange} required style={inputStyle}>
-          <option value="">Seleccione consultorio</option>
-          {rooms.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
-        </select>
-        <label>Hora inicio:</label>
-        <input type="datetime-local" name="startTime" value={formData.startTime} onChange={handleChange} required style={inputStyle} />
-        <label>Hora fin:</label>
-        <input type="datetime-local" name="endTime" value={formData.endTime} onChange={handleChange} required style={inputStyle} />
-        <button type="submit" style={buttonStyle}>Agendar</button>
-      </form>
+      <div style={cardStyle}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button onClick={() => navigate('/dashboard/admin/appointments')} style={backButtonStyle}>
+            <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>arrow_back</span>
+            Regresar
+          </button>
+          <h2 style={titleStyle}>Agendar Cita Médica</h2>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <select name="patientId" value={formData.patientId} onChange={handleChange} required style={inputStyle}>
+            <option value="">Seleccione paciente</option>
+            {patients.map(p => <option key={p.id} value={p.id}>{p.fullName}</option>)}
+          </select>
+          <select name="doctorId" value={formData.doctorId} onChange={handleChange} required style={inputStyle}>
+            <option value="">Seleccione doctor</option>
+            {doctors.map(d => <option key={d.id} value={d.id}>{d.fullName}</option>)}
+          </select>
+          <select name="consultRoomId" value={formData.consultRoomId} onChange={handleChange} required style={inputStyle}>
+            <option value="">Seleccione consultorio</option>
+            {rooms.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
+          </select>
+          <label style={labelStyle}>Hora inicio:</label>
+          <input type="datetime-local" name="startTime" value={formData.startTime} onChange={handleChange} required style={inputStyle} />
+          <label style={labelStyle}>Hora fin:</label>
+          <input type="datetime-local" name="endTime" value={formData.endTime} onChange={handleChange} required style={inputStyle} />
+          <button type="submit" style={submitButtonStyle}>Agendar</button>
+        </form>
+      </div>
     </div>
   );
 }
 
-const inputStyle = {
-  width: '100%',
-  padding: '12px',
-  marginBottom: '1rem',
-  border: '1px solid #ccc',
-  borderRadius: '6px'
-};
-
-const buttonStyle = {
-  padding: '12px 20px',
-  backgroundColor: '#2e7d32',
-  color: 'white',
-  border: 'none',
-  borderRadius: '6px',
-  cursor: 'pointer',
-  fontSize: '1rem'
-};
 
 export default AppointmentCreate;

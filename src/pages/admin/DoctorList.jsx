@@ -30,8 +30,8 @@ function DoctorList() {
     }
   };
 
-  const confirmDelete = (doctor) => {
-    setSelectedDoctor(doctor);
+  const confirmDelete = (doctor, index) => {
+    setSelectedDoctor({ ...doctor, index });
     setOpenDialog(true);
   };
 
@@ -76,6 +76,7 @@ function DoctorList() {
           <table style={tableStyle}>
             <thead>
               <tr style={{ backgroundColor: '#bbdefb' }}>
+                <th style={thStyle}>N°</th>
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Especialidad</th>
                 <th style={thStyle}>Email</th>
@@ -83,8 +84,9 @@ function DoctorList() {
               </tr>
             </thead>
             <tbody>
-              {doctors.map((doctor) => (
+              {doctors.map((doctor, index) => (
                 <tr key={doctor.id}>
+                  <td style={tdStyle}>{index +1}</td>
                   <td style={tdStyle}>{doctor.fullName}</td>
                   <td style={tdStyle}>{doctor.specialty}</td>
                   <td style={tdStyle}>{doctor.email}</td>
@@ -97,7 +99,7 @@ function DoctorList() {
                       Editar
                     </button>
                     <button
-                      onClick={() => confirmDelete(doctor)}
+                      onClick={() => confirmDelete(doctor, index+1)}
                       style={deleteButtonStyle}
                     >
                       <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>delete</span>
@@ -116,7 +118,7 @@ function DoctorList() {
         <DialogTitle>¿Eliminar doctor?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar al doctor "{selectedDoctor?.fullName}"? Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar al doctor N° {selectedDoctor?.index} con nombre "{selectedDoctor?.fullName}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -4,14 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './pages/home';
 import Login from './pages/Login';
-import UserDashboard from './pages/user/UserDashboard';
+import DoctorDashboard from './pages/user/DoctorDashboard';
 import PrivateRoute from './auth/PrivateRoute';
 import SignUp from './pages/SignUp';
 import RoleRoute from './auth/RoleRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import DoctorList from './pages/admin/DoctorList';
-import CreateDoctor from './pages/admin/DoctorCreate';
-import EditDoctor from './pages/admin/DoctorEdit';
 import ForgotPassword from './pages/ForgotPassword';
 import PatientList from './pages/admin/PatientList';
 import PatientEdit from './pages/admin/PatientEdit';
@@ -22,6 +20,10 @@ import AppointmentEdit from './pages/admin/AppointmentEdit';
 import ConsultRoomCreate from './pages/admin/ConsultRoomCreate';
 import ConsultRoomList from './pages/admin/ConsultRoomList';
 import ConsultRoomEdit from './pages/admin/ConsultRoomEdit';
+import DoctorAppointments from './pages/user/DoctorAppointments';
+import RegisterMedicalRecord from './pages/user/MedicalRecordRegister';
+import DoctorEdit from './pages/admin/DoctorEdit';
+import DoctorCreate from './pages/admin/DoctorCreate';
 
 function App() {
   return (
@@ -31,11 +33,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
-          path="/dashboard/user"
+          path="/dashboard/doctor"
           element={  
             <PrivateRoute>
               <RoleRoute allowedRoles={['ROLE_USER']}>
-                <UserDashboard />
+                <DoctorDashboard />
               </RoleRoute>
             </PrivateRoute>
           }
@@ -65,7 +67,7 @@ function App() {
           element={
             <PrivateRoute>
               <RoleRoute allowedRoles={['ROLE_ADMIN']}>
-                <CreateDoctor />
+                <DoctorCreate />
               </RoleRoute>
             </PrivateRoute>
           }
@@ -75,7 +77,7 @@ function App() {
           element={
             <PrivateRoute>
               <RoleRoute allowedRoles={['ROLE_ADMIN']}>
-                <EditDoctor />
+                <DoctorEdit />
               </RoleRoute>
             </PrivateRoute>
           }
@@ -171,6 +173,26 @@ function App() {
             <PrivateRoute>
               <RoleRoute allowedRoles={['ROLE_ADMIN']}>
                 <ConsultRoomEdit />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/dashboard/doctor/appointments'
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_USER']}>
+                <DoctorAppointments />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/dashboard/doctor/register-medical-record'
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_USER']}>
+                <RegisterMedicalRecord />
               </RoleRoute>
             </PrivateRoute>
           }

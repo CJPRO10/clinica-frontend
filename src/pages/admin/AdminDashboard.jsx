@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 function AdminDashboard() {
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ function AdminDashboard() {
     <div style={containerStyle}>
       <div style={cardStyle}>
         {/* Botón de regreso */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '1rem' }}>
         <button
           onClick={handleLogout}
           style={{
