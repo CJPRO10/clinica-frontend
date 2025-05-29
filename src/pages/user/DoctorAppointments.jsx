@@ -56,21 +56,30 @@ function DoctorAppointments() {
     switch (status.toUpperCase()) {
       case 'SCHEDULED': return '#f9a825';
       case 'COMPLETED': return '#2e7d32';
-      case 'CANCELLED': return '#c62828';
+      case 'CANCELED': return '#c62828';
       default: return '#333';
     }
   };
 
-  const updateStatus = async (id, status) => {
-  try {
-    await axios.put(`/appointments/${id}`);
-    toast.success(`Cita marcada como ${status}`);
-    fetchAppointments(); // refresca la lista
-  } catch (err) {
-    toast.error(err.response?.data?.message || 'Error al actualizar estado');
-  }
-};
+  const updateStatus = async (id, newStatus) => {
+    const appointment = appointments.find(app => app.id === id);
+    if (!appointment) {
+      toast.error("No se encontró la cita.");
+      return;
+    }
 
+    try {
+      await axios.put(`/appointments/${id}`, {
+        startTime: appointment.startTime,
+        endTime: appointment.endTime,
+        status: newStatus
+      });
+      toast.success(`Cita marcada como ${newStatus}`);
+      fetchAppointments(); // refresca la lista
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Error al actualizar estado');
+    }
+  };
 
   return (
     <div style={containerStyle}>
@@ -97,7 +106,7 @@ function DoctorAppointments() {
             <option value="">Todos</option>
             <option value="SCHEDULED">Scheduled</option>
             <option value="COMPLETED">Completed</option>
-            <option value="CANCELLED">Cancelled</option>
+            <option value="CANCELED">Canceled</option>
           </select>
         </div>
       </div>
@@ -137,7 +146,7 @@ function DoctorAppointments() {
                         Completar
                     </button>
                     <button
-                        onClick={() => updateStatus(app.id, 'CANCELLED')}
+                        onClick={() => updateStatus(app.id, 'CANCELED')}
                         style={actionButtonStyle('#d32f2f')}
                     >
                         Cancelar
