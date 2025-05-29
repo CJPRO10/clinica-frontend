@@ -27,8 +27,8 @@ function ConsultRoomList() {
     }
   };
 
-  const confirmDelete = (room) => {
-    setSelectedRoom(room);
+  const confirmDelete = (room, index) => {
+    setSelectedRoom({ ...room, index });
     setOpenDialog(true);
   };
 
@@ -75,9 +75,9 @@ function ConsultRoomList() {
           </tr>
         </thead>
         <tbody>
-          {rooms.map(room => (
+          {rooms.map((room, index) => (
             <tr key={room.id}>
-              <td style={tdStyle}>{room.id}</td>
+              <td style={tdStyle}>{index +1}</td>
               <td style={tdStyle}>{room.name}</td>
               <td style={tdStyle}>{room.floor}</td>
               <td style={tdStyle}>{room.description}</td>
@@ -90,7 +90,7 @@ function ConsultRoomList() {
                   Editar
                 </button>
                 <button
-                  onClick={() => confirmDelete(room)}
+                  onClick={() => confirmDelete(room, index+1)}
                   style={deleteButtonStyle}
                 >
                   <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>delete</span>
@@ -106,7 +106,7 @@ function ConsultRoomList() {
         <DialogTitle>¿Eliminar consultorio?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar el consultorio N° {selectedRoom?.id} con nombre "{selectedRoom?.name}"? <br /> Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar el consultorio N° {selectedRoom?.index} con nombre "{selectedRoom?.name}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

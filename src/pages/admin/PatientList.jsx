@@ -30,8 +30,8 @@ function PatientList() {
     }
   };
 
-  const confirmDelete = (patient) => {
-    setSelectedPatient(patient);
+  const confirmDelete = (patient, index) => {
+    setSelectedPatient({ ...patient, index});
     setOpenDialog(true);
   };
 
@@ -82,9 +82,9 @@ function PatientList() {
               </tr>
             </thead>
             <tbody>
-              {patients.map((patient) => (
+              {patients.map((patient, index) => (
                 <tr key={patient.id}>
-                  <td style={tdStyle}>{patient.id}</td>
+                  <td style={tdStyle}>{index +1}</td>
                   <td style={tdStyle}>{patient.fullName}</td>
                   <td style={tdStyle}>{patient.email}</td>
                   <td style={tdStyle}>{patient.phone}</td>
@@ -97,7 +97,7 @@ function PatientList() {
                       Editar
                     </button>
                     <button
-                      onClick={() => confirmDelete(patient)}
+                      onClick={() => confirmDelete(patient, index+1)}
                       style={deleteButtonStyle}
                     >
                       <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>delete</span>
@@ -116,7 +116,7 @@ function PatientList() {
         <DialogTitle>¿Eliminar paciente?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar al paciente N° {selectedPatient?.id} con nombre "{selectedPatient?.fullName}"? <br /> Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar al paciente N° {selectedPatient?.index} con nombre "{selectedPatient?.fullName}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -30,8 +30,8 @@ function AppointmentList() {
     }
   };
 
-  const confirmDelete = (appointment) => {
-    setSelectedAppointment(appointment);
+  const confirmDelete = (appointment, index) => {
+    setSelectedAppointment({ ...appointment, index });
     setOpenDialog(true);
   };
 
@@ -84,9 +84,9 @@ function AppointmentList() {
               </tr>
             </thead>
             <tbody>
-              {appointments.map((app) => (
+              {appointments.map((app, index) => (
                 <tr key={app.id}>
-                  <td style={tdStyle}>{app.id}</td>
+                  <td style={tdStyle}>{index +1}</td>
                   <td style={tdStyle}>{app.patientFullName}</td>
                   <td style={tdStyle}>{app.doctorFullName}</td>
                   <td style={tdStyle}>{app.consultRoomName}</td>
@@ -104,7 +104,7 @@ function AppointmentList() {
                         Editar
                         </button>
                         <button
-                        onClick={() => confirmDelete(app)}
+                        onClick={() => confirmDelete(app, index+1)}
                         style={deleteButtonStyle}
                         >
                         <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>delete</span>
@@ -125,7 +125,7 @@ function AppointmentList() {
         <DialogTitle>¿Eliminar cita?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar la cita N° "{selectedAppointment?.id}" a nombre de "{selectedAppointment?.patientFullName}"? <br /> Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar la cita N° "{selectedAppointment?.index}" a nombre de "{selectedAppointment?.patientFullName}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

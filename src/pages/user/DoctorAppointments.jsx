@@ -12,7 +12,8 @@ function DoctorAppointments() {
   const fetchAppointments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('/appointments');
+      const doctorId = localStorage.getItem('doctorId');
+      const res = await axios.get(`/appointments/doctor/${doctorId}`);
       setAppointments(res.data);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Error al obtener citas');
@@ -108,6 +109,7 @@ function DoctorAppointments() {
           <table style={tableStyle}>
             <thead>
               <tr style={{ backgroundColor: '#bbdefb' }}>
+                <th style={thStyle}>N°</th>
                 <th style={thStyle}>Paciente</th>
                 <th style={thStyle}>Doctor</th>
                 <th style={thStyle}>Consultorio</th>
@@ -117,8 +119,9 @@ function DoctorAppointments() {
               </tr>
             </thead>
             <tbody>
-              {filteredAppointments.map(app => (
+              {filteredAppointments.map((app, index) => (
                 <tr key={app.id}>
+                  <td style={tdStyle}>{index +1}</td>
                   <td style={tdStyle}>{app.patientFullName}</td>
                   <td style={tdStyle}>{app.doctorFullName}</td>
                   <td style={tdStyle}>{app.consultRoomName}</td>

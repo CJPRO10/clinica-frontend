@@ -16,7 +16,8 @@ function Login() {
 
       localStorage.setItem('token', token);
       localStorage.setItem('roles', JSON.stringify(roles));
-      localStorage.setItem('doctorId', res.data.doctorId);
+      const doctorId = res.data.doctorId;
+      if(doctorId) localStorage.setItem('doctorId', doctorId);
 
       toast.success('Inicio de sesión exitoso');
       
