@@ -74,6 +74,7 @@ function AppointmentList() {
           <table style={tableStyle}>
             <thead>
               <tr style={{ backgroundColor: '#bbdefb' }}>
+                <th style={thStyle}>N°</th>
                 <th style={thStyle}>Paciente</th>
                 <th style={thStyle}>Doctor</th>
                 <th style={thStyle}>Consultorio</th>
@@ -85,6 +86,7 @@ function AppointmentList() {
             <tbody>
               {appointments.map((app) => (
                 <tr key={app.id}>
+                  <td style={tdStyle}>{app.id}</td>
                   <td style={tdStyle}>{app.patientFullName}</td>
                   <td style={tdStyle}>{app.doctorFullName}</td>
                   <td style={tdStyle}>{app.consultRoomName}</td>
@@ -123,7 +125,7 @@ function AppointmentList() {
         <DialogTitle>¿Eliminar cita?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar la cita N° "{selectedAppointment?.id}" a nombre de "{selectedAppointment?.patientFullName}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

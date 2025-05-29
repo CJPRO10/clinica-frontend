@@ -67,6 +67,7 @@ function ConsultRoomList() {
       <table style={tableStyle}>
         <thead>
           <tr style={{ backgroundColor: '#bbdefb' }}>
+            <th style={thStyle}>N°</th>
             <th style={thStyle}>Nombre</th>
             <th style={thStyle}>Piso</th>
             <th style={thStyle}>Descripción</th>
@@ -76,6 +77,7 @@ function ConsultRoomList() {
         <tbody>
           {rooms.map(room => (
             <tr key={room.id}>
+              <td style={tdStyle}>{room.id}</td>
               <td style={tdStyle}>{room.name}</td>
               <td style={tdStyle}>{room.floor}</td>
               <td style={tdStyle}>{room.description}</td>
@@ -104,7 +106,7 @@ function ConsultRoomList() {
         <DialogTitle>¿Eliminar consultorio?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar el consultorio "{selectedRoom?.name}"?
+            ¿Estás seguro de que deseas eliminar el consultorio N° {selectedRoom?.id} con nombre "{selectedRoom?.name}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

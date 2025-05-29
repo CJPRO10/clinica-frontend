@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as styles from '../../styles/classes';
 
 function AppointmentEdit() {
   const { id } = useParams();
@@ -46,41 +47,31 @@ function AppointmentEdit() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={styles.containerStyle}>
       <ToastContainer />
-      <h2 style={{ color: '#1565c0' }}>Editar Cita Médica</h2>
-      <form onSubmit={handleSubmit} style={{ maxWidth: '500px' }}>
-        <label>Hora inicio:</label>
-        <input type="datetime-local" name="startTime" value={formData.startTime} onChange={handleChange} required style={inputStyle} />
-        <label>Hora fin:</label>
-        <input type="datetime-local" name="endTime" value={formData.endTime} onChange={handleChange} required style={inputStyle} />
-        <select name="status" value={formData.status} onChange={handleChange} required style={inputStyle}>
-          <option value="SCHEDULED">SCHEDULED</option>
-          <option value="COMPLETED">COMPLETED</option>
-          <option value="CANCELED">CANCELED</option>
-        </select>
-        <button type="submit" style={buttonStyle}>Actualizar</button>
-      </form>
+      <div style={styles.cardStyle}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button onClick={() => navigate('/dashboard/admin/appointments')} style={styles.backButtonStyle}>
+            <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>arrow_back</span>
+            Regresar
+          </button>
+          <h2 style={styles.titleStyle}>Editar Doctor</h2>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <label>Hora inicio:</label>
+          <input type="datetime-local" name="startTime" value={formData.startTime} onChange={handleChange} required style={styles.inputStyle} />
+          <label>Hora fin:</label>
+          <input type="datetime-local" name="endTime" value={formData.endTime} onChange={handleChange} required style={styles.inputStyle} />
+          <select name="status" value={formData.status} onChange={handleChange} required style={styles.inputStyle}>
+            <option value="SCHEDULED">SCHEDULED</option>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="CANCELED">CANCELED</option>
+          </select>
+          <button type="submit" style={styles.submitButtonStyle}>Actualizar</button>
+        </form>
+      </div>
     </div>
   );
 }
-
-const inputStyle = {
-  width: '100%',
-  padding: '12px',
-  marginBottom: '1rem',
-  border: '1px solid #ccc',
-  borderRadius: '6px'
-};
-
-const buttonStyle = {
-  padding: '12px 20px',
-  backgroundColor: '#2e7d32',
-  color: 'white',
-  border: 'none',
-  borderRadius: '6px',
-  cursor: 'pointer',
-  fontSize: '1rem'
-};
 
 export default AppointmentEdit;

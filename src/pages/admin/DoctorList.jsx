@@ -76,6 +76,7 @@ function DoctorList() {
           <table style={tableStyle}>
             <thead>
               <tr style={{ backgroundColor: '#bbdefb' }}>
+                <th style={thStyle}>N°</th>
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Especialidad</th>
                 <th style={thStyle}>Email</th>
@@ -85,6 +86,7 @@ function DoctorList() {
             <tbody>
               {doctors.map((doctor) => (
                 <tr key={doctor.id}>
+                  <td style={tdStyle}>{doctor.id}</td>
                   <td style={tdStyle}>{doctor.fullName}</td>
                   <td style={tdStyle}>{doctor.specialty}</td>
                   <td style={tdStyle}>{doctor.email}</td>
@@ -116,7 +118,7 @@ function DoctorList() {
         <DialogTitle>¿Eliminar doctor?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar al doctor "{selectedDoctor?.fullName}"? Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar al doctor N° {selectedDoctor?.id} con nombre "{selectedDoctor?.fullName}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

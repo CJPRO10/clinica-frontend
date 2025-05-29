@@ -74,6 +74,7 @@ function PatientList() {
           <table style={tableStyle}>
             <thead>
               <tr style={{ backgroundColor: '#bbdefb' }}>
+                <th style={thStyle}>N°</th>
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Email</th>
                 <th style={thStyle}>Teléfono</th>
@@ -83,6 +84,7 @@ function PatientList() {
             <tbody>
               {patients.map((patient) => (
                 <tr key={patient.id}>
+                  <td style={tdStyle}>{patient.id}</td>
                   <td style={tdStyle}>{patient.fullName}</td>
                   <td style={tdStyle}>{patient.email}</td>
                   <td style={tdStyle}>{patient.phone}</td>
@@ -114,7 +116,7 @@ function PatientList() {
         <DialogTitle>¿Eliminar paciente?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            ¿Estás seguro de que deseas eliminar al paciente "{selectedPatient?.fullName}"? Esta acción no se puede deshacer.
+            ¿Estás seguro de que deseas eliminar al paciente N° {selectedPatient?.id} con nombre "{selectedPatient?.fullName}"? <br /> Esta acción no se puede deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

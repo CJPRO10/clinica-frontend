@@ -24,7 +24,7 @@ const cardStyle = {
 
 const titleStyle = {
   color: '#2e7d32',
-  marginBottom: '0.5rem',
+  marginBottom: '1.5rem',
   fontSize: '1.8rem'
 };
 
@@ -73,6 +73,7 @@ const backButtonStyle = {
 
 const labelStyle = {
   display: 'block',
+  textAlign: 'left',
   fontWeight: 'bold',
   color: '#333'
 };

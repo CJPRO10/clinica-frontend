@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as styles from '../../styles/classes';
 
 function PatientEdit() {
   const { id } = useParams();
@@ -52,15 +53,15 @@ function PatientEdit() {
   };
 
   return (
-    <div style={containerStyle}>
+    <div style={styles.containerStyle}>
       <ToastContainer />
-      <div style={cardStyle}>
-        <div style={headerStyle}>
-          <button onClick={() => navigate('/dashboard/admin/patients')} style={backButtonStyle}>
+      <div style={styles.cardStyle}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button onClick={() => navigate('/dashboard/admin/patients')} style={styles.backButtonStyle}>
             <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>arrow_back</span>
             Regresar
           </button>
-          <h2 style={titleStyle}>Editar Paciente</h2>
+          <h2 style={styles.titleStyle}>Editar Paciente</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <input
@@ -70,7 +71,7 @@ function PatientEdit() {
             value={formData.fullName}
             onChange={handleChange}
             required
-            style={inputStyle}
+            style={styles.inputStyle}
           />
           <input
             type="email"
@@ -79,7 +80,7 @@ function PatientEdit() {
             value={formData.email}
             onChange={handleChange}
             required
-            style={inputStyle}
+            style={styles.inputStyle}
           />
           <input
             type="text"
@@ -88,85 +89,13 @@ function PatientEdit() {
             value={formData.phone}
             onChange={handleChange}
             required
-            style={inputStyle}
+            style={styles.inputStyle}
           />
-          <button type="submit" style={submitButtonStyle}>Actualizar Paciente</button>
+          <button type="submit" style={styles.submitButtonStyle}>Actualizar Paciente</button>
         </form>
       </div>
     </div>
   );
 }
-
-// 🎨 Estilos
-const containerStyle = {
-  minHeight: '100vh',
-  minWidth: '100vw',
-  background: 'linear-gradient(to right, #e3f2fd, #e8f5e9)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '1rem',
-  fontFamily: 'Segoe UI, sans-serif',
-  boxSizing: 'border-box'
-};
-
-const cardStyle = {
-  background: '#fff',
-  padding: '2rem',
-  borderRadius: '1rem',
-  boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-  width: '100%',
-  maxWidth: '500px',
-  boxSizing: 'border-box'
-};
-
-const headerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  marginBottom: '1.5rem'
-};
-
-const titleStyle = {
-  color: '#1565c0',
-  fontSize: '1.5rem',
-  margin: '1rem auto 0',
-  textAlign: 'center',
-  width: '100%'
-};
-
-const inputStyle = {
-  width: '100%',
-  padding: '12px',
-  marginBottom: '1rem',
-  border: '1px solid #ccc',
-  borderRadius: '6px',
-  fontSize: '1rem',
-  boxSizing: 'border-box'
-};
-
-const submitButtonStyle = {
-  width: '100%',
-  padding: '12px',
-  backgroundColor: '#2e7d32',
-  color: 'white',
-  border: 'none',
-  borderRadius: '6px',
-  cursor: 'pointer',
-  fontSize: '1rem',
-  transition: 'background-color 0.3s ease'
-};
-
-const backButtonStyle = {
-  padding: '8px 16px',
-  backgroundColor: '#d32f2f',
-  color: 'white',
-  border: 'none',
-  borderRadius: '6px',
-  cursor: 'pointer',
-  fontSize: '0.9rem',
-  display: 'flex',
-  alignItems: 'center'
-};
 
 export default PatientEdit;
