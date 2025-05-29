@@ -11,7 +11,7 @@ function SignUp() {
     username: '',
     email: '',
     password: '',
-    roles: ['user'], // por defecto "user"
+    roles: ['admin'], // por defecto "user"
   });
 
   const handleChange = (e) => {

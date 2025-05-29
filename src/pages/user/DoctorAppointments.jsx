@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { textFieldClasses } from '@mui/material';
 
 function DoctorAppointments() {
   const [appointments, setAppointments] = useState([]);
@@ -61,6 +60,17 @@ function DoctorAppointments() {
     }
   };
 
+  const updateStatus = async (id, status) => {
+  try {
+    await axios.put(`/appointments/${id}`);
+    toast.success(`Cita marcada como ${status}`);
+    fetchAppointments(); // refresca la lista
+  } catch (err) {
+    toast.error(err.response?.data?.message || 'Error al actualizar estado');
+  }
+};
+
+
   return (
     <div style={containerStyle}>
       <ToastContainer />
@@ -103,6 +113,7 @@ function DoctorAppointments() {
                 <th style={thStyle}>Consultorio</th>
                 <th style={thStyle}>Fecha y Hora</th>
                 <th style={thStyle}>Estado</th>
+                <th style={thStyle}>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -114,6 +125,20 @@ function DoctorAppointments() {
                   <td style={tdStyle}>{formatDateTimeRange(app.startTime, app.endTime)}</td>
                   <td style={{ ...tdStyle, fontWeight: 'bold', color: getStatusColor(app.status) }}>
                     {app.status}
+                  </td>
+                  <td style={tdStyle}>
+                    <button
+                        onClick={() => updateStatus(app.id, 'COMPLETED')}
+                        style={{ ...actionButtonStyle('#388e3c'), marginRight: '5px' }}
+                    >
+                        Completar
+                    </button>
+                    <button
+                        onClick={() => updateStatus(app.id, 'CANCELLED')}
+                        style={actionButtonStyle('#d32f2f')}
+                    >
+                        Cancelar
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -192,5 +217,16 @@ const tdStyle = {
   textAlign: 'center',
   border: '1px solid #ddd',
 };
+
+const actionButtonStyle = (bgColor) => ({
+  padding: '14px',
+  backgroundColor: bgColor,
+  color: 'white',
+  border: 'none',
+  borderRadius: '8px',
+  fontSize: '1rem',
+  cursor: 'pointer',
+  fontWeight: 'bold'
+});
 
 export default DoctorAppointments;

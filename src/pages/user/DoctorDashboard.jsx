@@ -20,7 +20,7 @@ function DoctorDashboard() {
           <button onClick={() => navigate('/dashboard/doctor/appointments')} style={navButtonStyle('#1976d2')}>
             📅 Ver Agenda
           </button>
-          <button onClick={() => navigate('/dashboard/doctor/register-record')} style={navButtonStyle('#388e3c')}>
+          <button onClick={() => navigate('/dashboard/doctor/register-medical-record')} style={navButtonStyle('#388e3c')}>
             📝 Registrar Diagnóstico
           </button>
           <button onClick={() => navigate('/dashboard/doctor/patient-records')} style={navButtonStyle('#f57c00')}>

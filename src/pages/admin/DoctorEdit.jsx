@@ -4,7 +4,7 @@ import axios from '../../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function EditDoctor() {
+function DoctorEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -155,5 +155,4 @@ const backButtonStyle = {
   cursor: 'pointer',
   fontSize: '0.9rem'
 };
-
-export default EditDoctor;
+export default DoctorEdit;

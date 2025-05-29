@@ -61,7 +61,7 @@ function AppointmentList() {
           Regresar
         </button>
         <h2 style={titleStyle}>Lista de Citas Médicas</h2>
-        <button onClick={() => navigate('/dashboard/admin/doctors/new')} style={newButtonStyle}>
+        <button onClick={() => navigate('/dashboard/admin/appointments/new')} style={newButtonStyle}>
           <span className="material-icons" style={{ verticalAlign: 'middle', marginRight: '6px' }}>person_add</span>
           Nueva Cita
         </button>

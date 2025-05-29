@@ -6,7 +6,7 @@ import axios from '../../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function CreateDoctor() {
+function DoctorCreate() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
@@ -129,4 +129,4 @@ const backButtonStyle = {
   fontSize: '0.9rem'
 };
 
-export default CreateDoctor;
+export default DoctorCreate;
