@@ -45,10 +45,10 @@ function PatientHistory() {
           <table style={styles.tableStyle}>
             <thead>
               <tr style={{ backgroundColor: '#bbdefb' }}>
-                <th>Fecha</th>
-                <th>Diagnóstico</th>
-                <th>Notas</th>
-                <th>Doctor</th>
+                <th style={styles.thStyle}>Fecha</th>
+                <th style={styles.thStyle}>Diagnóstico</th>
+                <th style={styles.thStyle}>Notas</th>
+                <th style={styles.thStyle}>Doctor</th>
               </tr>
             </thead>
             <tbody>
@@ -64,7 +64,14 @@ function PatientHistory() {
                   })}</td>
                   <td style={styles.tdStyle}>{record.diagnosis}</td>
                   <td style={styles.tdStyle}>{record.notes}</td>
-                  <td style={styles.tdStyle}>{record.doctorFullName}</td>
+                  <td style={styles.tdStyle}>
+                    <a
+                      href={`/dashboard/admin/doctor/${record.doctorId}`}
+                      style={{ textDecoration: 'none', color: 'blue', cursor: 'pointer' }}
+                    >
+                      {record.doctorFullName}                   
+                    </a> 
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -81,6 +81,26 @@ function RegisterMedicalRecord() {
                 </option>
               ))}
             </select>
+            {selectedAppointment && (
+              <div style={{ marginBottom: '1rem' }}>
+                <button
+                  type="button"
+                  onClick={() => window.open(`/dashboard/admin/appointments/${selectedAppointment}`, '_blank')}
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: '#0288d1',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Ver detalles de la cita
+                </button>
+              </div>
+            )}
+
             <div>
               <label style={styles.labelStyle}>Diagnóstico:</label>
               <textarea value={diagnosis} onChange={e => setDiagnosis(e.target.value)} required style={{ width: '100%', height: '80px' }} />

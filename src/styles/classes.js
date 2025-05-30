@@ -135,6 +135,15 @@ const toolbarStyle = {
   gap: '1rem',
 };
 
+const thStyle = {
+  padding: '12px',
+  borderBottom: '1px solid #ccc',
+  textAlign: 'center',
+  fontWeight: 'bold',
+  color: '#333',
+  border: '1px solid #ddd',
+};
+
 export {
   containerStyle,
   cardStyle,
@@ -151,4 +160,5 @@ export {
   tableStyle,
   containerStyleList,
   tdStyle,
+  thStyle,
 };
