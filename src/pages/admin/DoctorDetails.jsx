@@ -3,13 +3,11 @@ import { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import { toast } from 'react-toastify';
 import * as styles from '../../styles/classes';
-import { useNavigate } from 'react-router-dom';
 
 
 function DoctorDetail() {
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDoctor = async () => {
@@ -17,7 +15,7 @@ function DoctorDetail() {
         const res = await axios.get(`/doctors/${id}`);
         setDoctor(res.data);
       } catch (err) {
-        toast.error('Error al obtener los datos del doctor');
+        toast.error(err.response?.data?.message || 'Error al obtener los datos del doctor');
       }
     };
 

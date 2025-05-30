@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from '../../api/axios';
 import { toast } from 'react-toastify';
 import * as styles from '../../styles/classes';
@@ -7,7 +7,7 @@ import * as styles from '../../styles/classes';
 function AppointmentDetail() {
   const { id } = useParams();
   const [appointment, setAppointment] = useState(null);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchAppointment = async () => {
@@ -15,7 +15,7 @@ function AppointmentDetail() {
         const res = await axios.get(`/appointments/${id}`);
         setAppointment(res.data);
       } catch (error) {
-        toast.error('Error al obtener detalles de la cita');
+        toast.error(error.response?.data?.message||'Error al obtener detalles de la cita');
       }
     };
     fetchAppointment();

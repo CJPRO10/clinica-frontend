@@ -11,6 +11,7 @@ import {
   DialogActions,
   Button
 } from '@mui/material';
+import { labelStyle } from '../../styles/classes';
 
 function DoctorList() {
   const [doctors, setDoctors] = useState([]);
@@ -18,11 +19,15 @@ function DoctorList() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const navigate = useNavigate();
+  const [specialty, setSpecialty] = useState('');
+  const [allDoctors, setAllDoctors] = useState([]);
+
 
   const fetchDoctors = async () => {
     try {
       const res = await axios.get('/doctors');
       setDoctors(res.data);
+      setAllDoctors(res.data); // Guardar todos los doctores para filtrar
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error al obtener doctores');
     } finally {
@@ -47,6 +52,22 @@ function DoctorList() {
       setSelectedDoctor(null);
     }
   };
+
+  const handleSearch = async () => {
+    if (!specialty.trim()) {
+      setDoctors(allDoctors); // restaura todos si está vacío
+      return;
+    }
+
+    try {
+      const res = await axios.get(`/doctors?specialty=${specialty}`);
+      setDoctors(res.data);
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'No se encontraron doctores con esa especialidad');
+    }
+  };
+
+
 
   useEffect(() => {
     fetchDoctors();
@@ -86,6 +107,30 @@ function DoctorList() {
           Nuevo Doctor
         </button>
       </div>
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+        <input
+          type="text"
+          placeholder="Ej: pediatria"
+          value={specialty}
+          onChange={e => setSpecialty(e.target.value)}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', flex: 1 }}
+        />
+        <button
+          onClick={handleSearch}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#0288d1',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Buscar
+        </button>
+      </div>
+
+
 
       {/* Tabla */}
       <div style={{ overflowX: 'auto' }}>

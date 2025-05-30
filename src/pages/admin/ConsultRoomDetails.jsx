@@ -14,7 +14,7 @@ function RoomDetail() {
         const res = await axios.get(`/rooms/${id}`);
         setRoom(res.data);
       } catch (error) {
-        toast.error('Error al obtener detalles del consultorio');
+        toast.error(error.response?.data?.message || 'Error al obtener detalles del consultorio');
       }
     };
     fetchRoom();

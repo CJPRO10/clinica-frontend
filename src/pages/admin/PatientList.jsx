@@ -24,7 +24,7 @@ function PatientList() {
       const res = await axios.get('/patients');
       setPatients(res.data);
     } catch (error) {
-      toast.error('Error al obtener pacientes');
+      toast.error(error.response?.data?.message || 'Error al obtener pacientes');
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ function PatientList() {
       toast.success('Paciente eliminado correctamente');
       fetchPatients();
     } catch (error) {
-      toast.error('Error al eliminar el paciente');
+      toast.error(error.response?.data?.message || 'Error al eliminar el paciente');
     } finally {
       setOpenDialog(false);
       setSelectedPatient(null);

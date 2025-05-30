@@ -14,7 +14,7 @@ function PatientDetail() {
         const res = await axios.get(`/patients/${id}`);
         setPatient(res.data);
       } catch (error) {
-        toast.error('Error al obtener detalles del paciente');
+        toast.error(error?.err ||'Error al obtener detalles del paciente');
       }
     };
     fetchPatient();
