@@ -52,6 +52,25 @@ function DoctorList() {
     fetchDoctors();
   }, []);
 
+  const formatTimeRange = (startTime, endTime) => {
+  if (!startTime || !endTime) return 'No definido';
+  
+  // Función para formatear una hora individual
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours, 10);
+    const minute = minutes;
+    
+    // Determinar AM/PM
+    const period = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour % 12 || 12; // Convertir 0 a 12 para formato 12h
+    
+    return `${displayHour}:${minute} ${period}`;
+  };
+  
+  return `${formatTime(startTime)} - ${formatTime(endTime)}`;
+};
+
   return (
     <div style={containerStyle}>
       <ToastContainer />
@@ -80,6 +99,7 @@ function DoctorList() {
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Especialidad</th>
                 <th style={thStyle}>Email</th>
+                <th style={thStyle}>Horario</th>
                 <th style={thStyle}>Acciones</th>
               </tr>
             </thead>
@@ -90,6 +110,7 @@ function DoctorList() {
                   <td style={tdStyle}>{doctor.fullName}</td>
                   <td style={tdStyle}>{doctor.specialty}</td>
                   <td style={tdStyle}>{doctor.email}</td>
+                  <td style={tdStyle}>{formatTimeRange(doctor.availableFrom, doctor.availableTo)}</td>
                   <td style={tdStyle}>
                     <button
                       onClick={() => navigate(`/dashboard/admin/doctors/edit/${doctor.id}`)}
@@ -134,6 +155,8 @@ function DoctorList() {
   );
 
 }
+
+
 
 // 🎨 Estilos
 const containerStyle = {
