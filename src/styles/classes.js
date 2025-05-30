@@ -11,6 +11,32 @@ const containerStyle = {
   boxSizing: 'border-box'
 };
 
+const containerStyleList = {
+  padding: '2rem',
+  fontFamily: 'Segoe UI, sans-serif',
+  background: 'linear-gradient(to right, #e3f2fd, #e8f5e9)',
+  height: '100vh',
+  width: '100vw',
+  textAlign: 'center',    
+};
+
+const tableStyle = {
+  width: '100%',
+  borderCollapse: 'collapse',
+  backgroundColor: '#ffffff',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+};
+
+const tdStyle = {
+  padding: '12px',
+  borderBottom: '1px solid #eee',
+  color: '#444',
+  border: '1px solid #ddd',
+  textAlign: 'center'
+};
+
 const cardStyle = {
   backgroundColor: '#fff',
   padding: '2.5rem',
@@ -100,6 +126,15 @@ const submitButtonStyle = {
   transition: 'background-color 0.3s ease'
 };
 
+const toolbarStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: '1.5rem',
+  flexWrap: 'wrap',
+  gap: '1rem',
+};
+
 export {
   containerStyle,
   cardStyle,
@@ -108,8 +143,12 @@ export {
   buttonGroupStyle,
   navButtonStyle,
   iconStyle,
+  toolbarStyle,
   backButtonStyle,
   labelStyle,
   inputStyle,
-  submitButtonStyle
+  submitButtonStyle,
+  tableStyle,
+  containerStyleList,
+  tdStyle,
 };

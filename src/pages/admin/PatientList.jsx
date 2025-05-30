@@ -78,6 +78,7 @@ function PatientList() {
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Email</th>
                 <th style={thStyle}>Teléfono</th>
+                <th style={thStyle}>Historial Clinico</th>
                 <th style={thStyle}>Acciones</th>
               </tr>
             </thead>
@@ -88,6 +89,14 @@ function PatientList() {
                   <td style={tdStyle}>{patient.fullName}</td>
                   <td style={tdStyle}>{patient.email}</td>
                   <td style={tdStyle}>{patient.phone}</td>
+                  <td style={tdStyle}>
+                    <button
+                      onClick={() => navigate(`/dashboard/admin/patient-history/${patient.id}`)}
+                      className="button-primary"
+                    >
+                      Ver historial
+                    </button>
+                  </td>
                   <td style={tdStyle}>
                     <button
                       onClick={() => navigate(`/dashboard/admin/patients/edit/${patient.id}`)}

@@ -24,6 +24,7 @@ import DoctorAppointments from './pages/user/DoctorAppointments';
 import RegisterMedicalRecord from './pages/user/MedicalRecordRegister';
 import DoctorEdit from './pages/admin/DoctorEdit';
 import DoctorCreate from './pages/admin/DoctorCreate';
+import PatientHistory from './pages/admin/PatientHistory';
 
 function App() {
   return (
@@ -113,6 +114,16 @@ function App() {
             <PrivateRoute>
               <RoleRoute allowedRoles={['ROLE_ADMIN']}>
                 <PatientEdit />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/patient-history/:id"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <PatientHistory />
               </RoleRoute>
             </PrivateRoute>
           }
