@@ -23,9 +23,6 @@ function DoctorDashboard() {
           <button onClick={() => navigate('/dashboard/doctor/register-medical-record')} style={navButtonStyle('#388e3c')}>
             📝 Registrar Diagnóstico
           </button>
-          <button onClick={() => navigate('/dashboard/doctor/patient-records')} style={navButtonStyle('#f57c00')}>
-            📚 Ver Historial de Pacientes
-          </button>
         </div>
 
         <button onClick={handleLogout} style={logoutButtonStyle}>
