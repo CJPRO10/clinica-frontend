@@ -49,23 +49,6 @@ function Home() {
           >
             Iniciar Sesión
           </button>
-          <button
-            onClick={() => navigate('/signup')}
-            style={{
-              backgroundColor: '#66bb6a',
-              color: 'white',
-              padding: '12px 24px',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              transition: 'background-color 0.3s ease',
-            }}
-            onMouseOver={e => e.currentTarget.style.backgroundColor = '#5aa65f'}
-            onMouseOut={e => e.currentTarget.style.backgroundColor = '#66bb6a'}
-          >
-            Crear Cuenta
-          </button>
         </div>
       </div>
     </div>

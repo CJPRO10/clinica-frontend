@@ -11,6 +11,7 @@ import {
   DialogActions,
   Button
 } from '@mui/material';
+import { labelStyle } from '../../styles/classes';
 
 function DoctorList() {
   const [doctors, setDoctors] = useState([]);
@@ -18,11 +19,15 @@ function DoctorList() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const navigate = useNavigate();
+  const [specialty, setSpecialty] = useState('');
+  const [allDoctors, setAllDoctors] = useState([]);
+
 
   const fetchDoctors = async () => {
     try {
       const res = await axios.get('/doctors');
       setDoctors(res.data);
+      setAllDoctors(res.data); // Guardar todos los doctores para filtrar
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error al obtener doctores');
     } finally {
@@ -48,9 +53,44 @@ function DoctorList() {
     }
   };
 
+  const handleSearch = async () => {
+    if (!specialty.trim()) {
+      setDoctors(allDoctors); // restaura todos si está vacío
+      return;
+    }
+
+    try {
+      const res = await axios.get(`/doctors?specialty=${specialty}`);
+      setDoctors(res.data);
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'No se encontraron doctores con esa especialidad');
+    }
+  };
+
+
+
   useEffect(() => {
     fetchDoctors();
   }, []);
+
+  const formatTimeRange = (startTime, endTime) => {
+  if (!startTime || !endTime) return 'No definido';
+  
+  // Función para formatear una hora individual
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours, 10);
+    const minute = minutes;
+    
+    // Determinar AM/PM
+    const period = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour % 12 || 12; // Convertir 0 a 12 para formato 12h
+    
+    return `${displayHour}:${minute} ${period}`;
+  };
+  
+  return `${formatTime(startTime)} - ${formatTime(endTime)}`;
+};
 
   return (
     <div style={containerStyle}>
@@ -67,6 +107,30 @@ function DoctorList() {
           Nuevo Doctor
         </button>
       </div>
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+        <input
+          type="text"
+          placeholder="Ej: pediatria"
+          value={specialty}
+          onChange={e => setSpecialty(e.target.value)}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', flex: 1 }}
+        />
+        <button
+          onClick={handleSearch}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#0288d1',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Buscar
+        </button>
+      </div>
+
+
 
       {/* Tabla */}
       <div style={{ overflowX: 'auto' }}>
@@ -80,6 +144,7 @@ function DoctorList() {
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Especialidad</th>
                 <th style={thStyle}>Email</th>
+                <th style={thStyle}>Horario</th>
                 <th style={thStyle}>Acciones</th>
               </tr>
             </thead>
@@ -90,6 +155,7 @@ function DoctorList() {
                   <td style={tdStyle}>{doctor.fullName}</td>
                   <td style={tdStyle}>{doctor.specialty}</td>
                   <td style={tdStyle}>{doctor.email}</td>
+                  <td style={tdStyle}>{formatTimeRange(doctor.availableFrom, doctor.availableTo)}</td>
                   <td style={tdStyle}>
                     <button
                       onClick={() => navigate(`/dashboard/admin/doctors/edit/${doctor.id}`)}
@@ -134,6 +200,8 @@ function DoctorList() {
   );
 
 }
+
+
 
 // 🎨 Estilos
 const containerStyle = {

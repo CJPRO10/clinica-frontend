@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'; 
 import {
   Dialog,
   DialogTitle,
@@ -87,9 +87,30 @@ function AppointmentList() {
               {appointments.map((app, index) => (
                 <tr key={app.id}>
                   <td style={tdStyle}>{index +1}</td>
-                  <td style={tdStyle}>{app.patientFullName}</td>
-                  <td style={tdStyle}>{app.doctorFullName}</td>
-                  <td style={tdStyle}>{app.consultRoomName}</td>
+                  <td style={tdStyle}>
+                    <Link
+                      to={`/dashboard/admin/patients/${app.patientId}`}
+                      style={{ textDecoration: 'none', color: 'blue', cursor: 'pointer' }}
+                    >
+                      {app.patientFullName}    
+                    </Link>
+                  </td>
+                  <td style={tdStyle}>
+                    <Link
+                      to={`/dashboard/admin/doctor/${app.doctorId}`}
+                      style={{ textDecoration: 'none', color: 'blue', cursor: 'pointer' }}
+                    >
+                      {app.doctorFullName}                    
+                    </Link> 
+                  </td>
+                  <td style={tdStyle}>
+                    <Link
+                      to={`/dashboard/admin/consultRoom/${app.consultRoomId}`}
+                      style={{ textDecoration: 'none', cursor: 'pointer', color: 'blue' }}
+                    >
+                      {app.consultRoomName}   
+                    </Link>
+                  </td>
                   <td style={tdStyle}>
                     {formatDateTimeRange(app.startTime, app.endTime)}
                   </td>

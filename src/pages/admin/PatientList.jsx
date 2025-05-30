@@ -24,7 +24,7 @@ function PatientList() {
       const res = await axios.get('/patients');
       setPatients(res.data);
     } catch (error) {
-      toast.error('Error al obtener pacientes');
+      toast.error(error.response?.data?.message || 'Error al obtener pacientes');
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ function PatientList() {
       toast.success('Paciente eliminado correctamente');
       fetchPatients();
     } catch (error) {
-      toast.error('Error al eliminar el paciente');
+      toast.error(error.response?.data?.message || 'Error al eliminar el paciente');
     } finally {
       setOpenDialog(false);
       setSelectedPatient(null);
@@ -78,6 +78,7 @@ function PatientList() {
                 <th style={thStyle}>Nombre</th>
                 <th style={thStyle}>Email</th>
                 <th style={thStyle}>Teléfono</th>
+                <th style={thStyle}>Historial Clinico</th>
                 <th style={thStyle}>Acciones</th>
               </tr>
             </thead>
@@ -88,6 +89,14 @@ function PatientList() {
                   <td style={tdStyle}>{patient.fullName}</td>
                   <td style={tdStyle}>{patient.email}</td>
                   <td style={tdStyle}>{patient.phone}</td>
+                  <td style={tdStyle}>
+                    <button
+                      onClick={() => navigate(`/dashboard/admin/patient-history/${patient.id}`)}
+                      className="button-primary"
+                    >
+                      Ver historial
+                    </button>
+                  </td>
                   <td style={tdStyle}>
                     <button
                       onClick={() => navigate(`/dashboard/admin/patients/edit/${patient.id}`)}

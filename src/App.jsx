@@ -24,6 +24,11 @@ import DoctorAppointments from './pages/user/DoctorAppointments';
 import RegisterMedicalRecord from './pages/user/MedicalRecordRegister';
 import DoctorEdit from './pages/admin/DoctorEdit';
 import DoctorCreate from './pages/admin/DoctorCreate';
+import PatientHistory from './pages/admin/PatientHistory';
+import DoctorDetail from './pages/admin/DoctorDetails';
+import PatientDetail from './pages/admin/PatientDetails';
+import RoomDetail from './pages/admin/ConsultRoomDetails';
+import AppointmentDetail from './pages/admin/AppointmentDetails';
 
 function App() {
   return (
@@ -32,6 +37,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path='dashboard/admin/doctor/:id' element={<DoctorDetail />} />
+        <Route path='dashboard/admin/patients/:id' element={<PatientDetail />} /> 
+        <Route path='dashboard/admin/consultRoom/:id' element={<RoomDetail />} />
+        <Route path="dashboard/admin/appointments/:id" element={<AppointmentDetail />} />
         <Route
           path="/dashboard/doctor"
           element={  
@@ -113,6 +122,16 @@ function App() {
             <PrivateRoute>
               <RoleRoute allowedRoles={['ROLE_ADMIN']}>
                 <PatientEdit />
+              </RoleRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/admin/patient-history/:id"
+          element={
+            <PrivateRoute>
+              <RoleRoute allowedRoles={['ROLE_ADMIN']}>
+                <PatientHistory />
               </RoleRoute>
             </PrivateRoute>
           }
